@@ -4,6 +4,7 @@ import com.mylistanime.dto.request.AnimeRequestDTO;
 import com.mylistanime.dto.response.AnimeResponseDTO;
 import com.mylistanime.entity.Anime;
 import com.mylistanime.entity.Genero;
+import com.mylistanime.exception.ResourceNotFoundException;
 import com.mylistanime.mapper.AnimeMapper;
 import com.mylistanime.repository.AnimeRepository;
 import com.mylistanime.repository.GeneroRepository;
@@ -26,7 +27,7 @@ public class AnimeServiceImpl implements AnimeService {
 
         //Obtenemos el IdGenero de la Request, validamos si existe o no.
         Genero genero = generoRepository.findById(dto.getGeneroId())
-                .orElseThrow(() -> new IllegalArgumentException("ID invalido"));
+                .orElseThrow(() -> new ResourceNotFoundException("ID invalido"));
 
         //Con el mapper convertimos a una Entidad, le pasamos la Request
         // y el genero.
@@ -45,7 +46,7 @@ public class AnimeServiceImpl implements AnimeService {
     private Anime existsAnimeById(Long id){
 
         return animeRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Anime con ID:" +id+" no encontrado"));
+                .orElseThrow(()-> new ResourceNotFoundException("Anime con ID:" +id+" no encontrado"));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class AnimeServiceImpl implements AnimeService {
         Anime animeExists = existsAnimeById(id);
 
         Genero genero = generoRepository.findById(dto.getGeneroId())
-                .orElseThrow(() -> new IllegalArgumentException("ID invalido"));
+                .orElseThrow(() -> new ResourceNotFoundException("ID invalido"));
 
         animeExists.setTitulo(dto.getTitulo());
         animeExists.setEstado(dto.getEstado());
@@ -91,7 +92,7 @@ public class AnimeServiceImpl implements AnimeService {
     public void eliminarAnime(Long id) {
 
         if (!animeRepository.existsById(id)){
-            throw new IllegalArgumentException("Anime no encontrado con ID: " + id)
+            throw new ResourceNotFoundException("Anime no encontrado con ID: "+id);
         }
         animeRepository.deleteById(id);
     }
