@@ -16,8 +16,8 @@ import java.util.Map;
 /**
  * Controlador global de excepciones.
  * - @RestControllerAdvice usado para apisRest.
- * - Incluye @ResponseBody implicito, el mensaje se devuelve como JSON a diferencia.
- * de @ControllerAdvice que sirve para redirigir a una vista si no se unsa @ResponseBody.
+ * - Incluye @ResponseBody implicito, el mensaje se devuelve como JSON a diferencia
+ *   de @ControllerAdvice que sirve para redirigir a una vista si no se usa @ResponseBody.
  */
 
 @RestControllerAdvice
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponse response = errorBuilder.build(
                 "BAD_REQUEST",
-                "Error de validacón",
+                "Al validar se encontro un error, cuidado!",
                 request,
                 HttpStatus.BAD_REQUEST,
                 data
